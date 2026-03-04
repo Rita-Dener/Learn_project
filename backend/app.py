@@ -19,7 +19,7 @@ def home():
 
 @app.route('/health')
 def health_check():
-    return jsonify({'status', 'ok'}), 200
+    return jsonify({'status': 'ok'}), 200
 
 if __name__ == '__main__':
     if not os.path.exists('data'):
@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     print("=" * 40)
     print("Сервер запущен")
-    print("API доступен по адресу: https://localhost:5000")
+    print("API доступен по адресу: http://localhost:5000")
     print("Фронтенд: frontend/index.html")
     print("=" * 40)
 

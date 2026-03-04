@@ -1,17 +1,18 @@
-'use script';
-const API_BASE_URL = 'https://localhost:5000';
+'use strict';
+const API_BASE_URL = 'http://localhost:5000';
 const API_CHECK_INTERVAL = 5000;
 let apiCheckTimer = null;
+
 async function checkApiStatus(){
     const statusElement = document.getElementById('api-status');
     const spinnerElement = document.getElementById('loading-spinner');
     try{
-        const response = await fetch('${API_BASE_URL}/', {
+        const response = await fetch(`${API_BASE_URL}/`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
             }
-        })
+        });
 
         if (response.ok){
             const data = await response.json();
@@ -42,14 +43,14 @@ async function checkApiStatus(){
 function startApiMonitoring() {
     checkApiStatus();
     apiCheckTimer = setInterval(checkApiStatus, API_CHECK_INTERVAL);
-    console.log('Мониторинг API запущен')
+    console.log('Мониторинг API запущен');
 }
 
 function stopApiMonitoring() {
     if (apiCheckTimer){
         clearInterval(apiCheckTimer);
         apiCheckTimer = null;
-        console.log('Мониторинг API становлен')
+        console.log('Мониторинг API становлен');
     }
 }
 
@@ -60,20 +61,20 @@ function initApp() {
 }
 
 function setupEventListeners() {
-    window.addEventListener('beforeunload', stopApiMonitoring)
-    window.addEventListener('online', checkApiStatus)
+    window.addEventListener('beforeunload', stopApiMonitoring);
+    window.addEventListener('online', checkApiStatus);
     window.addEventListener('offline', function () {
         const statusElement = document.getElementById('api-status');
         if (statusElement){
             statusElement.textContent = 'Нет интернет-соединения';
         }
-    })
+    });
 }
 
-document.addEventListener('DOMContentLoaded', initApp)
+document.addEventListener('DOMContentLoaded', initApp);
 
 function formateDate(date) {
-    return date.toLocaleString('ru-RU')
+    return date.toLocaleString('ru-RU');
 }
 
 window.appDebug = {
@@ -85,5 +86,5 @@ window.appDebug = {
 console.log('Для откладки используйте window.appDebug в консоли браузера(F12)');
 console.log('Доступные команды:');
 console.log(' window.appDebug.checkApiStatus() - проверить API');
-console.log('window.appDebug.stopApiMonitoring() - остановить проверку');
-console.log('window.appDebug.formateDate() - форматироваать дату');
+console.log(' window.appDebug.stopApiMonitoring() - остановить проверку');
+console.log(' window.appDebug.formateDate() - форматироваать дату');
