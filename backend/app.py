@@ -8,6 +8,8 @@ app = APIFlask(
     docs_path='/docs'
 )
 
+app.json.ensure_ascii = False  # Отключаем экранирование Unicode
+
 app.config['SYNC_LOCAL_SPEC'] = False
 
 register_routes(app)
