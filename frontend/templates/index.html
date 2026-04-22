@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <h1 class="h3 mb-1">Учебные материалы</h1>
+</div>
+
+<div class="row">
+    {% if materials %}
+        {% for material in materials %}
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ material.title }}</h5>
+                    <p class="card-text">
+                        <a href="{{ material.link }}">{{ material.link }}</a>
+                    </p>
+                    <p class="card-text">{{ material.description }}</p>
+                    <a href="#" class="btn btn-danger">Удалить</a>
+                    <a href="#" class="btn btn-warning">Частчное редактирование</a>
+                    <a href="#" class="btn btn-secondary">Полное редактирование</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="text-center py-5">
+                <h2 class="h5">Материалов нет</h2>
+                <p class="text-muted">Добавьте первый материал</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
