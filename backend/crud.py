@@ -1,12 +1,12 @@
 from .database import connect
 
-def det_all():
+def get_all():
     conn = connect()
     rows = conn.execute('SELECT * FROM material ORDER BY id').fetchall()
     conn.close()
     return [dict(row) for row in rows]
 
-def det_by_id(material_id: int):
+def get_by_id(material_id: int):
     conn = connect()
     row = conn.execute('SELECT * FROM material WHERE id = ?', (material_id,)).fetchall()
     conn.close()
@@ -29,7 +29,7 @@ def create_material(material: dict):
     conn.commit()
     material_id = cursor.lastrowid
     conn.close()
-    return det_by_id(material_id)
+    return get_by_id(material_id)
 
 def update_material(material_id: int, material: dict):
     conn = connect()
@@ -51,10 +51,10 @@ def update_material(material_id: int, material: dict):
     conn.close()
     if update_rows == 0:
         return None
-    return det_by_id(material_id)
+    return get_by_id(material_id)
 
 def patch_material(material_id: int, material: dict):
-    existing = det_by_id(material_id)
+    existing = get_by_id(material_id)
     if not existing:
         return None
 
