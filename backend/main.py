@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from . import crud
 from .database import init_db
-from .schemas import MaterialsCreate, MaterialUpdate, MaterialPatch, MaterialResponse
+from .schemas import MaterialsCreate, MaterialUpdate, MaterialResponse
 
 app = FastAPI()
 
@@ -31,13 +31,6 @@ def create_materials(materials: MaterialsCreate):
 @app.put("/materials/{material_id}", response_model=MaterialResponse, tags=["Materials"])
 def update_material_by_id(material_id: int, material: MaterialUpdate):
     updated_material = crud.update_material(material_id, material.model_dump())
-    if not updated_material:
-        raise HTTPException(status_code=404, detail="Материал не найден")
-    return updated_material
-
-@app.patch("/materials/{material_id}", response_model=MaterialResponse, tags=["Materials"])
-def patch_material_by_id(material_id: int, material: MaterialPatch):
-    updated_material = crud.patch_material(material_id, material.model_dump())
     if not updated_material:
         raise HTTPException(status_code=404, detail="Материал не найден")
     return updated_material

@@ -2,28 +2,28 @@ from .database import connect
 
 def get_all():
     conn = connect()
-    rows = conn.execute('SELECT * FROM material ORDER BY id').fetchall()
+    rows = conn.execute('SELECT * FROM materials ORDER BY id').fetchall()
     conn.close()
     return [dict(row) for row in rows]
 
 def get_by_id(material_id: int):
     conn = connect()
-    row = conn.execute('SELECT * FROM material WHERE id = ?', (material_id,)).fetchall()
+    row = conn.execute('SELECT * FROM materials WHERE id = ?', (material_id,)).fetchone()
     conn.close()
     return dict(row) if row else None
 
-def create_material(material: dict):
+def create_material(materials: dict):
     conn = connect()
     cursor = conn.cursor()
     cursor.execute(
         '''
-        INSERT INTO material(title, description, link) 
+        INSERT INTO materials(title, description, link) 
         VALUES (?, ?, ?)
         ''',
         (
-            material['title'],
-            material.get('description', ''),
-            material['link']
+            materials['title'],
+            materials.get('description', ''),
+            materials['link']
         )
     )
     conn.commit()
@@ -31,18 +31,18 @@ def create_material(material: dict):
     conn.close()
     return get_by_id(material_id)
 
-def update_material(material_id: int, material: dict):
+def update_material(material_id: int, materials: dict):
     conn = connect()
     cursor = conn.cursor()
     cursor.execute(
         '''
-        UPDATE material 
+        UPDATE materials 
         SET title = ?, description = ?, link = ? WHERE id = ?
         ''',
         (
-            material['title'],
-            material.get('description', ''),
-            material['link'],
+            materials['title'],
+            materials.get('description', ''),
+            materials['link'],
             material_id
         )
     )
@@ -53,22 +53,10 @@ def update_material(material_id: int, material: dict):
         return None
     return get_by_id(material_id)
 
-def patch_material(material_id: int, material: dict):
-    existing = get_by_id(material_id)
-    if not existing:
-        return None
-
-    updated = {
-        'title': material.get('title', existing['title']),
-        'description': material.get('description', existing['description']),
-        'link': material.get('link', existing['link']),
-    }
-    return update_material(material_id, updated)
-
 def delete_material(material_id: int):
     conn = connect()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM material WHERE id = ?", (material_id,))
+    cursor.execute("DELETE FROM materials WHERE id = ?", (material_id,))
     conn.commit()
     delete_rows = cursor.rowcount
     conn.close()

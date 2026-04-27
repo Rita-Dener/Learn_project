@@ -16,11 +16,10 @@
                         <a href="{{ material.link }}">{{ material.link }}</a>
                     </p>
                     <p class="card-text">{{ material.description }}</p>
-                    <form action="{{ url_for('delete_material', material_id=material.id) }}" method="post" class="d-inline">
+                    <form action="{{ url_for('delete', material_id=material.id) }}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-danger">Удалить</button>
                     </form>
-                    <a href="{{ url_for('patch_material', material_id=material.id) }}" class="btn btn-warning">Частчное редактирование</a>
-                    <a href="{{ url_for('put_material', material_id=material.id) }}" class="btn btn-secondary">Полное редактирование</a>
+                    <a href="{{ url_for('edit', material_id=material.id) }}" class="btn btn-warning">Редактирование</a>
                 </div>
             </div>
         </div>
