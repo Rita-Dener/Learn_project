@@ -16,7 +16,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS materials (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            description TEXT,
+            description TEXT NULL,
             link TEXT NOT NULL
         )
         '''
