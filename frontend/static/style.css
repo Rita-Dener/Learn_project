@@ -286,34 +286,34 @@ main.container {
 }
 
 .form-container {
-        max-width: 700px;
-        margin: 0 auto;
-        background: white;
-        border-radius: 20px;
-        padding: 2rem;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-        border: 1px solid #e2e8f0;
-    }
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
 
-    .form-header {
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #f1f5f9;
-    }
+.form-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f1f5f9;
+}
 
-    .form-header h2 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #0f172a;
-        margin-bottom: 0.5rem;
-    }
+.form-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
 
-    .form-header h2 i {
-        color: #10b981;
-        margin-right: 0.5rem;
-    }
+.form-header h2 i {
+    color: #10b981;
+    margin-right: 0.5rem;
+}
 
-    .form-header .text-muted {
-        color: #64748b;
-        font-size: 0.9rem;
-    }
+.form-header .text-muted {
+    color: #64748b;
+    font-size: 0.9rem;
+}
