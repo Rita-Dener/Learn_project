@@ -3,7 +3,11 @@ from . import crud
 from .database import init_db
 from .schemas import MaterialsCreate, MaterialUpdate, MaterialResponse
 
-app = FastAPI()
+app = FastAPI(
+    title="Materials API",
+    description="Простой API для управления материалами",
+    version="1.0",
+)
 
 @app.on_event("startup")
 def startup():
