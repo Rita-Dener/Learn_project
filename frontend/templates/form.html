@@ -1,28 +1,53 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <h3>Редактирование материала
-        </h3>
-        <form method="post" action="{{ action_url }}" class="row g-3">
-          <div class="mb-3">
-            <label class="form-label">Название</label>
-            <input type="text" class="form-control" name="title" required value="{{ material.title if material else '' }}">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Ссылка</label>
-            <input type="url" class="form-control" name="link" required value="{{ material.link if material else '' }}">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Описание</label>
-            <textarea class="form-control" name="description" rows="4">{{ material.description if material else '' }}</textarea>
-          </div>
-          <div class="mb-3">
-            <button type="submit" class="btn btn-primary">{{ 'Сохранить' if material else 'Добавить' }}</button>
-            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Отмена</a>
-          </div>
-        </form>
+<div class="form-container">
+    <div class="form-header">
+        <h2>
+            {% if material %}
+                <i class="fa-solid fa-pen"></i> Редактирование
+            {% else %}
+                <i class="fa-solid fa-plus"></i> Добавление материала
+            {% endif %}
+        </h2>
+        <p class="text-muted">Заполните информацию об учебном материале</p>
     </div>
+
+    <form method="post" action="{{ action_url }}">
+        <div class="mb-4">
+            <label class="form-label">
+                <i class="fa-solid fa-heading fa-xs"></i> Название
+            </label>
+            <input type="text" class="form-control" name="title" required
+                   value="{{ material.title if material else '' }}"
+                   placeholder="Например: Введение в Python">
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">
+                <i class="fa-solid fa-link"></i> Ссылка
+            </label>
+            <input type="url" class="form-control" name="link" required
+                   value="{{ material.link if material else '' }}"
+                   placeholder="https://...">
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">
+                <i class="fa-solid fa-align-left"></i> Описание
+            </label>
+            <textarea class="form-control" name="description" rows="5"
+                      placeholder="Краткое описание материала...">{{ material.description if material else '' }}</textarea>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-check"></i> {{ 'Сохранить' if material else 'Добавить' }}
+            </button>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-times"></i> Отмена
+            </a>
+        </div>
+    </form>
 </div>
 {% endblock %}
