@@ -17,15 +17,19 @@ def api_put(endpoint: str, data: dict):
 def api_delete(endpoint: str):
     return requests.delete(f"{API_URL}{endpoint}", timeout=5)
 
+
 @app.route('/')
 def index():
+    view_mode = request.args.get('view_mode', 'two_columns')
+    select_mode = request.args.get('select_mode', '0')
     try:
         response = api_get('/materials')
         materials = response.json() if response.ok else []
-        return render_template('index.html', materials=materials)
+        return render_template('index.html', materials=materials, view_mode=view_mode, select_mode=select_mode)
     except Exception as error:
         flash(f"Данные от API не получены: {error}", "danger")
-    return render_template('index.html', materials=[])
+
+    return render_template('index.html', materials=[], view_mode=view_mode, select_mode=select_mode)
 
 @app.route('/materials/create', methods=['GET','POST'])
 def create():
@@ -68,10 +72,22 @@ def edit(material_id: int):
 def delete(material_id: int):
     response = api_delete(f'/materials/{material_id}')
     if response.ok:
-        flash("Материла удалён!!!!", "success")
+        flash("Материал удалён!!!!", "success")
     else:
-        flash("Материла не удален(((", "danger")
+        flash("Материал не удален(((", "danger")
     return redirect(url_for('index'))
+
+
+@app.route('/materials/delete-selected', methods=['POST'])
+def delete_selected():
+    material_ids = request.form.getlist('selected_materials')
+    for material_id in material_ids:
+        response = api_delete(f'/materials/{material_id}')
+        if response.ok:
+            flash("Материалы удалены!!!!", "success")
+        else:
+            flash("Материалы не удалены(((", "danger")
+    return redirect(url_for('index', select_mode='0'))
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -23,6 +23,11 @@ def get_materials():
 
 @app.get("/materials/{material_id}", response_model=MaterialResponse, tags=["Materials"])
 def read_material_by_id(material_id: int):
+    '''
+    Возвращает определенный материал
+    :param material_id: int
+    :return: определенный материал
+    '''
     material = crud.get_by_id(material_id)
     if not material:
         raise HTTPException(status_code=404, detail="Материал не найден")
@@ -39,7 +44,7 @@ def update_material_by_id(material_id: int, material: MaterialUpdate):
         raise HTTPException(status_code=404, detail="Материал не найден")
     return updated_material
 
-@app.delete("/materials/{material_id}", response_model=MaterialResponse, tags=["Materials"])
+@app.delete("/materials/{material_id}", tags=["Materials"])
 def delete_material_by_id(material_id: int):
     deleted_material = crud.delete_material(material_id)
     if not deleted_material:
