@@ -27,14 +27,6 @@ def index():
         flash(f"Данные от API не получены: {error}", "danger")
     return render_template('index.html', materials=[])
 
-@app.route('/materials/<material_id>')
-def material_by_id(material_id: int):
-    response = api_get(f'/materials/{material_id}')
-    if not response.ok:
-        flash("Материал не найден", "danger")
-        return redirect(url_for('index'))
-    return render_template("material_by_id.html", material=response.json())
-
 @app.route('/materials/create', methods=['GET','POST'])
 def create():
     if request.method == 'POST':
